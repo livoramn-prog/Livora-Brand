@@ -45,14 +45,14 @@ export default function ContactPage() {
             <ContactItem
               icon={<InstagramIcon size={18} />}
               label="Instagram"
-              value="@livora.mn"
-              href="https://instagram.com/livora.mn"
+              value="@livora.mn2025"
+              href="https://www.instagram.com/livora.mn2025/"
             />
             <ContactItem
               icon={<FacebookIcon size={18} />}
               label="Facebook"
               value="Livora"
-              href="https://facebook.com/livora.mn"
+              href="https://www.facebook.com/profile.php?id=100065203522377"
             />
             <ContactItem icon={<MapPin size={18} />} label="Хаяг" value="Улаанбаатар, Монгол" />
           </div>

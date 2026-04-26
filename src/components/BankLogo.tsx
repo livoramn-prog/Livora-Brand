@@ -1,32 +1,55 @@
-type BankLogoConfig = {
-  bg: string;
-  fg: string;
-  label: string;
+import Image from "next/image";
+
+const KNOWN_LOGOS: Record<string, { src: string; alt: string; bg: string }> = {
+  tdb: { src: "/banks/tdb.png", alt: "ХХБ (TDB)", bg: "#ffffff" },
+  khas: { src: "/banks/khas.png", alt: "Хас Банк", bg: "#ffffff" },
 };
 
-const CONFIG: Record<string, BankLogoConfig> = {
-  tdb: { bg: "#005F3C", fg: "#ffffff", label: "TDB" },
-  khas: { bg: "#C8102E", fg: "#ffffff", label: "Хас" },
-};
+export function BankLogo({
+  bankId,
+  bankName,
+  size = 44,
+}: {
+  bankId: string;
+  bankName?: string;
+  size?: number;
+}) {
+  const logo = KNOWN_LOGOS[bankId];
 
-const FALLBACK: BankLogoConfig = { bg: "#000000", fg: "#ffffff", label: "?" };
+  if (logo) {
+    return (
+      <div
+        className="inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border"
+        style={{
+          width: size * 2,
+          height: size,
+          backgroundColor: logo.bg,
+        }}
+      >
+        <Image
+          src={logo.src}
+          alt={logo.alt}
+          width={size * 2}
+          height={size}
+          className="h-full w-full object-contain p-1.5"
+        />
+      </div>
+    );
+  }
 
-export function BankLogo({ bankId, size = 44 }: { bankId: string; size?: number }) {
-  const cfg = CONFIG[bankId] ?? FALLBACK;
-
+  // Fallback for unknown banks: text initials
+  const initial = (bankName ?? bankId).trim().slice(0, 2).toUpperCase();
   return (
     <div
-      className="inline-flex shrink-0 items-center justify-center rounded-xl font-semibold tracking-tight"
+      className="inline-flex shrink-0 items-center justify-center rounded-xl bg-foreground font-semibold text-background"
       style={{
         width: size,
         height: size,
-        backgroundColor: cfg.bg,
-        color: cfg.fg,
         fontSize: size * 0.32,
       }}
       aria-hidden="true"
     >
-      {cfg.label}
+      {initial}
     </div>
   );
 }

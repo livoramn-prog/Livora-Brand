@@ -40,7 +40,7 @@ export default async function AdminBanksPage() {
                 className={`rounded-2xl border p-6 ${active ? "border-border" : "border-dashed border-border opacity-60"}`}
               >
                 <div className="flex items-start justify-between">
-                  <BankLogo bankId={bank.id} size={48} />
+                  <BankLogo bankId={bank.id} bankName={bank.bankName} size={40} />
                   <BankRowActions bankId={bank.id} isActive={active} />
                 </div>
                 <p className="mt-4 text-lg font-medium">{bank.bankName}</p>

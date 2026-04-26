@@ -114,7 +114,7 @@ export function BuyModal({
                       className="group flex w-full items-center justify-between"
                     >
                       <div className="flex items-center gap-4">
-                        <BankLogo bankId={bank.id} />
+                        <BankLogo bankId={bank.id} bankName={bank.bankName} />
                         <div className="text-left">
                           <p className="text-sm font-medium">{bank.bankName}</p>
                           <p className="text-xs text-muted-foreground">{bank.accountHolder}</p>
