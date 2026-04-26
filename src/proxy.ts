@@ -5,25 +5,24 @@ export function proxy(request: NextRequest) {
   const expectedUser = process.env.ADMIN_USER ?? "admin";
   const expectedPass = process.env.ADMIN_PASSWORD ?? "livora2026";
 
-  const auth = request.headers.get("authorization");
+  const cookie = request.cookies.get("livora_admin")?.value;
 
-  if (auth) {
-    const [scheme, encoded] = auth.split(" ");
-    if (scheme === "Basic" && encoded) {
-      const decoded = Buffer.from(encoded, "base64").toString("utf-8");
+  if (cookie) {
+    try {
+      const decoded = Buffer.from(cookie, "base64").toString("utf-8");
       const [user, pass] = decoded.split(":");
       if (user === expectedUser && pass === expectedPass) {
         return NextResponse.next();
       }
+    } catch {
+      // invalid cookie, fall through to redirect
     }
   }
 
-  return new NextResponse("Нэвтрэх шаардлагатай", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="Livora Admin", charset="UTF-8"',
-    },
-  });
+  const url = request.nextUrl.clone();
+  url.pathname = "/login";
+  url.searchParams.set("from", request.nextUrl.pathname);
+  return NextResponse.redirect(url);
 }
 
 export const config = {

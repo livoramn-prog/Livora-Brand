@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LayoutDashboard, BookOpen, ShoppingBag, FileText, CreditCard, ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { LogoutButton } from "@/components/LogoutButton";
 
 const NAV = [
   { href: "/admin", label: "Тойм", icon: LayoutDashboard },
@@ -36,13 +37,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             })}
           </nav>
 
-          <div className="mt-auto">
+          <div className="mt-auto flex flex-col gap-3">
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft size={12} /> Сайт руу буцах
             </Link>
+            <LogoutButton />
           </div>
         </div>
       </aside>
