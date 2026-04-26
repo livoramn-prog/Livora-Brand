@@ -2,17 +2,18 @@
 
 import { useState } from "react";
 import { X, Copy, Check } from "lucide-react";
-import { BANK_ACCOUNTS } from "@/lib/data";
-import { Course } from "@/lib/types";
+import { BankAccount, Course } from "@/lib/types";
 import { formatPrice, cn } from "@/lib/utils";
 import { BankLogo } from "./BankLogo";
 
 export function BuyModal({
   course,
+  banks,
   open,
   onClose,
 }: {
   course: Course;
+  banks: BankAccount[];
   open: boolean;
   onClose: () => void;
 }) {
@@ -102,7 +103,7 @@ export function BuyModal({
                 бичнэ үү.
               </p>
               <div className="mt-4 space-y-2">
-                {BANK_ACCOUNTS.map((bank) => (
+                {banks.map((bank) => (
                   <div
                     key={bank.id}
                     className="rounded-2xl border border-border bg-background p-4"

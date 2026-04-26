@@ -2,12 +2,16 @@ import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
 import { CourseCard } from "@/components/CourseCard";
 import { ArticleCard } from "@/components/ArticleCard";
-import { ARTICLES, getFeaturedCourses, getFreeCourses } from "@/lib/data";
+import { getAllArticles, getFeaturedCourses, getFreeCourses } from "@/lib/data";
 
-export default function HomePage() {
-  const featured = getFeaturedCourses(6);
-  const free = getFreeCourses().slice(0, 3);
-  const latestArticles = ARTICLES.slice(0, 3);
+export default async function HomePage() {
+  const [featured, free, allArticles] = await Promise.all([
+    getFeaturedCourses(6),
+    getFreeCourses(),
+    getAllArticles(),
+  ]);
+  const latestArticles = allArticles.slice(0, 3);
+  const freeTop = free.slice(0, 3);
 
   return (
     <>
@@ -93,7 +97,7 @@ export default function HomePage() {
         description="Шууд татаад хэрэглэхэд бэлэн гарын авлага, template, challenge-ууд."
       >
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {free.map((course) => (
+          {freeTop.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
         </div>

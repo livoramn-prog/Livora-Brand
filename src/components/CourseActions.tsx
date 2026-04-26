@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { Download, ShoppingBag } from "lucide-react";
-import { Course } from "@/lib/types";
+import { BankAccount, Course } from "@/lib/types";
 import { BuyModal } from "./BuyModal";
 import { FreeDownloadModal } from "./FreeDownloadModal";
 
-export function CourseActions({ course }: { course: Course }) {
+export function CourseActions({ course, banks }: { course: Course; banks: BankAccount[] }) {
   const [open, setOpen] = useState(false);
   const isFree = course.price === 0;
 
@@ -31,7 +31,7 @@ export function CourseActions({ course }: { course: Course }) {
       {isFree ? (
         <FreeDownloadModal course={course} open={open} onClose={() => setOpen(false)} />
       ) : (
-        <BuyModal course={course} open={open} onClose={() => setOpen(false)} />
+        <BuyModal course={course} banks={banks} open={open} onClose={() => setOpen(false)} />
       )}
     </>
   );

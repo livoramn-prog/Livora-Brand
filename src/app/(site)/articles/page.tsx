@@ -1,7 +1,8 @@
 import { ArticleCard } from "@/components/ArticleCard";
-import { ARTICLES } from "@/lib/data";
+import { getAllArticles } from "@/lib/data";
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const ARTICLES = await getAllArticles();
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="max-w-2xl">

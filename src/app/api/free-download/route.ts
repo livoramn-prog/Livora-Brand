@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const course = getCourseBySlug(courseSlug);
+    const course = await getCourseBySlug(courseSlug);
     if (!course) {
       return NextResponse.json({ error: "Сургалт олдсонгүй" }, { status: 404 });
     }

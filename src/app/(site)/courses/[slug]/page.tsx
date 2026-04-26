@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, BookOpen, Star, Users, FileVideo, FileText, FileSpreadsheet, FileImage, FileType2 } from "lucide-react";
-import { COURSES, getCourseBySlug } from "@/lib/data";
+import { getActiveBankAccounts, getAllCourses, getCourseBySlug } from "@/lib/data";
 import { CATEGORY_LABELS, FileType } from "@/lib/types";
 import { formatPrice, formatDuration } from "@/lib/utils";
 import { CourseActions } from "@/components/CourseActions";
 
-export function generateStaticParams() {
-  return COURSES.map((c) => ({ slug: c.slug }));
+export async function generateStaticParams() {
+  const all = await getAllCourses();
+  return all.map((c) => ({ slug: c.slug }));
 }
 
 const FILE_ICONS: Record<FileType, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -31,7 +32,7 @@ const FILE_LABELS: Record<FileType, string> = {
 
 export default async function CourseDetailPage(props: PageProps<"/courses/[slug]">) {
   const { slug } = await props.params;
-  const course = getCourseBySlug(slug);
+  const [course, banks] = await Promise.all([getCourseBySlug(slug), getActiveBankAccounts()]);
   if (!course) notFound();
 
   return (
@@ -119,7 +120,7 @@ export default async function CourseDetailPage(props: PageProps<"/courses/[slug]
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Үнэ</p>
             <p className="mt-2 text-4xl font-light">{formatPrice(course.price)}</p>
             <div className="mt-6">
-              <CourseActions course={course} />
+              <CourseActions course={course} banks={banks} />
             </div>
             <ul className="mt-6 space-y-3 border-t border-border pt-6 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">

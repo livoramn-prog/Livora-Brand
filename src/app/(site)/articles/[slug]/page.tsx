@@ -2,21 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { ARTICLES, getArticleBySlug } from "@/lib/data";
+import { getAllArticles, getArticleBySlug } from "@/lib/data";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { ArticleCard } from "@/components/ArticleCard";
 
-export function generateStaticParams() {
-  return ARTICLES.map((a) => ({ slug: a.slug }));
+export async function generateStaticParams() {
+  const all = await getAllArticles();
+  return all.map((a) => ({ slug: a.slug }));
 }
 
 export default async function ArticleDetailPage(props: PageProps<"/articles/[slug]">) {
   const { slug } = await props.params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) notFound();
 
-  const related = ARTICLES.filter((a) => a.id !== article.id).slice(0, 3);
+  const all = await getAllArticles();
+  const related = all.filter((a) => a.id !== article.id).slice(0, 3);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
