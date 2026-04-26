@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Free download email error:", error);
     return NextResponse.json(
-      { error: "Имэйл илгээх үед алдаа гарлаа. Дараа дахин оролдоно уу." },
+      { error: "Имэйл илгээх үед алдаа гарлаа. Дахин оролдоно уу." },
       { status: 500 }
     );
   }

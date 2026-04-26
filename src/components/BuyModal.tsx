@@ -5,6 +5,7 @@ import { X, Copy, Check } from "lucide-react";
 import { BANK_ACCOUNTS } from "@/lib/data";
 import { Course } from "@/lib/types";
 import { formatPrice, cn } from "@/lib/utils";
+import { BankLogo } from "./BankLogo";
 
 export function BuyModal({
   course,
@@ -112,7 +113,7 @@ export function BuyModal({
                       className="group flex w-full items-center justify-between"
                     >
                       <div className="flex items-center gap-4">
-                        <span className="text-2xl">{bank.logoEmoji}</span>
+                        <BankLogo bankId={bank.id} />
                         <div className="text-left">
                           <p className="text-sm font-medium">{bank.bankName}</p>
                           <p className="text-xs text-muted-foreground">{bank.accountHolder}</p>

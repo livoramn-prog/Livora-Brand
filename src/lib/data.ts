@@ -260,7 +260,7 @@ export const BANK_ACCOUNTS: BankAccount[] = [
     logoEmoji: "🏦",
   },
   {
-    id: "khan",
+    id: "khas",
     bankName: "Хас Банк",
     accountNumber: "5004519704",
     iban: "MN620032005004519704",
