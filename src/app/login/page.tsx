@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { Lock } from "lucide-react";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const from = searchParams.get("from") || "/admin";
@@ -39,6 +39,54 @@ export default function LoginPage() {
   };
 
   return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-xs uppercase tracking-widest text-muted-foreground">
+          Нэвтрэх нэр
+        </label>
+        <input
+          type="text"
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
+          autoComplete="username"
+          required
+          autoFocus
+          className="mt-1.5 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-foreground"
+        />
+      </div>
+      <div>
+        <label className="block text-xs uppercase tracking-widest text-muted-foreground">
+          Нууц үг
+        </label>
+        <input
+          type="password"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          autoComplete="current-password"
+          required
+          className="mt-1.5 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-foreground"
+        />
+      </div>
+
+      {error && (
+        <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-xs text-red-700">
+          {error}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-4 text-sm uppercase tracking-widest text-background transition-opacity hover:opacity-90 disabled:opacity-50"
+      >
+        <Lock size={14} /> {loading ? "Нэвтэрч байна..." : "Нэвтрэх"}
+      </button>
+    </form>
+  );
+}
+
+export default function LoginPage() {
+  return (
     <div className="flex min-h-screen items-center justify-center bg-background p-6">
       <div className="w-full max-w-sm">
         <div className="mb-10 flex flex-col items-center text-center">
@@ -49,49 +97,9 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs uppercase tracking-widest text-muted-foreground">
-              Нэвтрэх нэр
-            </label>
-            <input
-              type="text"
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-              autoComplete="username"
-              required
-              autoFocus
-              className="mt-1.5 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-foreground"
-            />
-          </div>
-          <div>
-            <label className="block text-xs uppercase tracking-widest text-muted-foreground">
-              Нууц үг
-            </label>
-            <input
-              type="password"
-              value={pass}
-              onChange={(e) => setPass(e.target.value)}
-              autoComplete="current-password"
-              required
-              className="mt-1.5 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-foreground"
-            />
-          </div>
-
-          {error && (
-            <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-xs text-red-700">
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-4 text-sm uppercase tracking-widest text-background transition-opacity hover:opacity-90 disabled:opacity-50"
-          >
-            <Lock size={14} /> {loading ? "Нэвтэрч байна..." : "Нэвтрэх"}
-          </button>
-        </form>
+        <Suspense fallback={<div className="h-64" />}>
+          <LoginForm />
+        </Suspense>
       </div>
     </div>
   );
