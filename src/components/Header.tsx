@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -35,22 +36,27 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           <Link
             href="/courses"
-            className="rounded-full bg-foreground px-5 py-2 text-xs uppercase tracking-widest text-background transition-opacity hover:opacity-90"
+            className="rounded-full px-5 py-2 text-xs uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+            style={{ background: "var(--brand)" }}
           >
             Эхлэх
           </Link>
         </div>
 
-        <button
-          type="button"
-          aria-label="Цэс"
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            aria-label="Цэс"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </div>
 
       <div

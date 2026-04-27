@@ -30,13 +30,30 @@ export const metadata: Metadata = {
   },
 };
 
+// FOUC-аас сэргийлэх — React render хийхээс өмнө data-theme-ыг тохируулна
+const themeInitScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem('theme');
+    if (stored === 'dark') {
+      document.documentElement.dataset.theme = 'dark';
+    } else if (!stored && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="mn" className={`${manrope.variable} h-full antialiased`}>
+    <html lang="mn" className={`${manrope.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
