@@ -36,12 +36,6 @@ export function Header() {
 
         <div className="hidden items-center gap-3 md:flex">
           <Link
-            href="/admin"
-            className="text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Admin
-          </Link>
-          <Link
             href="/courses"
             className="rounded-full bg-foreground px-5 py-2 text-xs uppercase tracking-widest text-background transition-opacity hover:opacity-90"
           >
@@ -76,13 +70,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/admin"
-            onClick={() => setOpen(false)}
-            className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            Admin
-          </Link>
         </nav>
       </div>
     </header>

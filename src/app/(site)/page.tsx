@@ -17,24 +17,28 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--brand-bg)] via-background to-[var(--warm-soft)] opacity-60" />
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
           <div className="max-w-3xl fade-up">
             <p className="brand-wordmark text-xs uppercase text-muted-foreground">
               Live · Inspire · Vision · Organize · Rise · Achieve
             </p>
             <h1 className="mt-6 text-5xl font-light leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              Амьдралаа <span className="italic">илүү</span> цэгцтэй,
+              Дижитал чадвар.
               <br />
-              амжилттай авч яв.
+              Эрүүл сэтгэл.
+              <br />
+              <span className="italic" style={{ color: "var(--brand)" }}>Шинэ Чи.</span>
             </h1>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Дижитал маркетинг, Instagram бизнес, онлайн шоп эрхлэлт, сэтгэл зүй, эрүүл мэнд —
-              амжилттай амьдрахад шаардлагатай бүх ур чадварыг нэг дор сурах боломж.
+              Монгол хэл дээрх премиум сургалтууд — Instagram бизнесээс сэтгэлийн тэнцвэр хүртэл.
+              Бэлэн материал, видео, шаблонтой. Шууд эхлээд, шууд хэрэглэнэ.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 href="/courses"
-                className="inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm uppercase tracking-widest text-background transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+                style={{ background: "var(--brand)" }}
               >
                 Сургалтуудыг үзэх <ArrowRight size={16} />
               </Link>
@@ -47,10 +51,10 @@ export default async function HomePage() {
             </div>
 
             <div className="mt-16 grid grid-cols-2 gap-8 border-t border-border pt-10 sm:grid-cols-4">
-              <Stat value="8+" label="Сургалт" />
-              <Stat value="10K+" label="Сурагч" />
-              <Stat value="4.9" label="Дундаж үнэлгээ" />
-              <Stat value="24/7" label="Дэмжлэг" />
+              <Stat value="8" label="Сургалт" />
+              <Stat value="6" label="Чиглэл" />
+              <Stat value="100%" label="Монгол хэл" />
+              <Stat value="24ч" label="Email хариу" />
             </div>
           </div>
         </div>
@@ -118,17 +122,20 @@ export default async function HomePage() {
 
       {/* CTA */}
       <section className="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-3xl bg-foreground px-8 py-20 text-center text-background sm:px-16">
-          <p className="brand-wordmark text-xs uppercase opacity-60">Livora</p>
+        <div
+          className="overflow-hidden rounded-3xl px-8 py-20 text-center text-white sm:px-16"
+          style={{ background: "var(--brand)" }}
+        >
+          <p className="brand-wordmark text-xs uppercase opacity-70">Livora</p>
           <h2 className="mx-auto mt-4 max-w-3xl text-4xl font-light leading-tight sm:text-5xl">
-            Өөрчлөлт өнөөдрөөс эхэлнэ.
+            Өөрчлөлт өнөөдөр л эхэлнэ.
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed opacity-70">
-            Үнэгүй сургалтаа татаж авч, өнөөдрөөс л шинэ зам руу алхаарай.
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed opacity-80">
+            Үнэгүй сургалтаа татаад, өнөөдрөөс л шинэ замаар алх.
           </p>
           <Link
             href="/courses"
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-background px-8 py-4 text-sm uppercase tracking-widest text-foreground transition-opacity hover:opacity-90"
+            className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm uppercase tracking-widest text-foreground transition-opacity hover:opacity-90"
           >
             Эхлэх <ArrowRight size={16} />
           </Link>

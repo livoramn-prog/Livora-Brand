@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCourseBySlug } from "@/lib/data";
 import { sendOrderEmails } from "@/lib/email";
+import { sendTelegramOrderNotification } from "@/lib/notifications";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export async function POST(request: Request) {
@@ -36,13 +37,17 @@ export async function POST(request: Request) {
       // Continue to send email even if DB fails
     }
 
-    // 2. Send notification + confirmation emails
-    try {
-      await sendOrderEmails({ course, customerName, customerEmail, customerPhone, bankUsed });
-    } catch (emailError) {
-      console.error("Order email error:", emailError);
-      // Don't fail the request if email fails — order is already saved
-    }
+    // 2. Send notifications in parallel (email + Telegram)
+    await Promise.allSettled([
+      sendOrderEmails({ course, customerName, customerEmail, customerPhone, bankUsed }),
+      sendTelegramOrderNotification({
+        course,
+        customerName,
+        customerEmail,
+        customerPhone,
+        bankUsed,
+      }),
+    ]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

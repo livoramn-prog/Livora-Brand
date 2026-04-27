@@ -6,6 +6,10 @@ import { getActiveBankAccounts, getAllCourses, getCourseBySlug } from "@/lib/dat
 import { CATEGORY_LABELS, FileType } from "@/lib/types";
 import { formatPrice, formatDuration } from "@/lib/utils";
 import { CourseActions } from "@/components/CourseActions";
+import { WhatYouLearn } from "@/components/WhatYouLearn";
+import { InstructorCard } from "@/components/InstructorCard";
+import { Testimonials } from "@/components/Testimonials";
+import { getTestimonialsForCategory } from "@/lib/testimonials";
 
 export async function generateStaticParams() {
   const all = await getAllCourses();
@@ -80,11 +84,16 @@ export default async function CourseDetailPage(props: PageProps<"/courses/[slug]
           <div className="mt-12">
             <h2 className="text-2xl font-light">Сургалтын тухай</h2>
             <div className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground">
-              {course.description.split("\n").map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+              {course.description
+                .split("\n")
+                .filter((p) => !p.trim().startsWith("- ") && !p.trim().startsWith("* "))
+                .map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
             </div>
           </div>
+
+          <WhatYouLearn description={course.description} />
 
           <div className="mt-12">
             <h2 className="text-2xl font-light">Юу багтсан бэ?</h2>
@@ -112,6 +121,9 @@ export default async function CourseDetailPage(props: PageProps<"/courses/[slug]
               })}
             </ul>
           </div>
+
+          <InstructorCard name={course.instructor} />
+          <Testimonials items={getTestimonialsForCategory(course.category)} />
         </div>
 
         {/* Right: sticky purchase card */}

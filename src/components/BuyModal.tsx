@@ -102,62 +102,78 @@ export function BuyModal({
                 Аль нэг данс дээр дарж дугаарыг хуулна. Гүйлгээний утга дээр өөрийн утасны дугаараа
                 бичнэ үү.
               </p>
-              <div className="mt-4 space-y-2">
+              <div className="mt-4 space-y-3">
                 {banks.map((bank) => (
                   <div
                     key={bank.id}
-                    className="rounded-2xl border border-border bg-background p-4"
+                    className="overflow-hidden rounded-2xl border border-border bg-background"
                   >
+                    {/* Bank header */}
+                    <div className="flex items-center gap-3 p-4">
+                      <BankLogo bankId={bank.id} bankName={bank.bankName} size={36} />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium">{bank.bankName}</p>
+                        <p className="truncate text-xs text-muted-foreground">
+                          {bank.accountHolder}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Account number row */}
                     <button
                       type="button"
                       onClick={() => handleCopy(bank.accountNumber, bank.id)}
-                      className="group flex w-full items-center justify-between"
+                      className="flex w-full items-center justify-between gap-3 border-t border-border px-4 py-3 text-left transition-colors hover:bg-muted/50 active:bg-muted"
                     >
-                      <div className="flex items-center gap-4">
-                        <BankLogo bankId={bank.id} bankName={bank.bankName} />
-                        <div className="text-left">
-                          <p className="text-sm font-medium">{bank.bankName}</p>
-                          <p className="text-xs text-muted-foreground">{bank.accountHolder}</p>
-                        </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                          Дансны дугаар
+                        </p>
+                        <p className="mt-0.5 font-mono text-base font-medium">
+                          {bank.accountNumber}
+                        </p>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-base">{bank.accountNumber}</span>
-                        <span
-                          className={cn(
-                            "inline-flex h-8 w-8 items-center justify-center rounded-full border transition-colors",
-                            copiedId === bank.id
-                              ? "border-foreground bg-foreground text-background"
-                              : "border-border text-muted-foreground group-hover:border-foreground group-hover:text-foreground"
-                          )}
-                        >
-                          {copiedId === bank.id ? <Check size={14} /> : <Copy size={14} />}
-                        </span>
-                      </div>
+                      <span
+                        className={cn(
+                          "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors",
+                          copiedId === bank.id
+                            ? "border-foreground bg-foreground text-background"
+                            : "border-border text-muted-foreground"
+                        )}
+                      >
+                        {copiedId === bank.id ? <Check size={15} /> : <Copy size={15} />}
+                      </span>
                     </button>
+
+                    {/* IBAN row */}
                     {bank.iban && (
                       <button
                         type="button"
                         onClick={() => handleCopy(bank.iban!, `${bank.id}-iban`)}
-                        className="mt-3 flex w-full items-center justify-between border-t border-border pt-3 text-left"
+                        className="flex w-full items-center justify-between gap-3 border-t border-border px-4 py-3 text-left transition-colors hover:bg-muted/50 active:bg-muted"
                       >
-                        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                          IBAN
-                        </span>
-                        <div className="flex items-center gap-3">
-                          <span className="font-mono text-xs text-muted-foreground">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                            IBAN
+                          </p>
+                          <p className="mt-0.5 truncate font-mono text-xs text-muted-foreground">
                             {bank.iban}
-                          </span>
-                          <span
-                            className={cn(
-                              "inline-flex h-6 w-6 items-center justify-center rounded-full border transition-colors",
-                              copiedId === `${bank.id}-iban`
-                                ? "border-foreground bg-foreground text-background"
-                                : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-                            )}
-                          >
-                            {copiedId === `${bank.id}-iban` ? <Check size={12} /> : <Copy size={12} />}
-                          </span>
+                          </p>
                         </div>
+                        <span
+                          className={cn(
+                            "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors",
+                            copiedId === `${bank.id}-iban`
+                              ? "border-foreground bg-foreground text-background"
+                              : "border-border text-muted-foreground"
+                          )}
+                        >
+                          {copiedId === `${bank.id}-iban` ? (
+                            <Check size={13} />
+                          ) : (
+                            <Copy size={13} />
+                          )}
+                        </span>
                       </button>
                     )}
                   </div>
