@@ -10,6 +10,7 @@ import { WhatYouLearn } from "@/components/WhatYouLearn";
 import { InstructorCard } from "@/components/InstructorCard";
 import { Testimonials } from "@/components/Testimonials";
 import { getTestimonialsForCategory } from "@/lib/testimonials";
+import { applyDiscount, isPromoActive, PROMO } from "@/lib/promo";
 
 export async function generateStaticParams() {
   const all = await getAllCourses();
@@ -130,7 +131,30 @@ export default async function CourseDetailPage(props: PageProps<"/courses/[slug]
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-3xl border border-border bg-background p-8">
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Үнэ</p>
-            <p className="mt-2 text-4xl font-light">{formatPrice(course.price)}</p>
+            {(() => {
+              const promoOn = isPromoActive() && course.price > 0;
+              const finalPrice = promoOn ? applyDiscount(course.price) : course.price;
+              return (
+                <>
+                  <div className="mt-2 flex items-baseline gap-3">
+                    <p className="text-4xl font-light">{formatPrice(finalPrice)}</p>
+                    {promoOn && (
+                      <p className="text-lg text-muted-foreground line-through">
+                        {formatPrice(course.price)}
+                      </p>
+                    )}
+                  </div>
+                  {promoOn && (
+                    <p
+                      className="mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-white"
+                      style={{ background: "var(--brand)" }}
+                    >
+                      🔥 {PROMO.discountPercent}% хэмнэлээ
+                    </p>
+                  )}
+                </>
+              );
+            })()}
             <div className="mt-6">
               <CourseActions course={course} banks={banks} />
             </div>

@@ -5,6 +5,7 @@ import { X, Copy, Check } from "lucide-react";
 import { BankAccount, Course } from "@/lib/types";
 import { formatPrice, cn } from "@/lib/utils";
 import { BankLogo } from "./BankLogo";
+import { applyDiscount, isPromoActive, PROMO } from "@/lib/promo";
 
 export function BuyModal({
   course,
@@ -88,12 +89,31 @@ export function BuyModal({
           <>
             <p className="brand-wordmark text-xs uppercase text-muted-foreground">Худалдан авах</p>
             <h2 className="mt-2 text-2xl font-medium leading-tight">{course.title}</h2>
-            <div className="mt-4 flex items-center gap-3">
-              <span className="text-3xl font-light">{formatPrice(course.price)}</span>
-              <span className="rounded-full bg-foreground px-3 py-1 text-[10px] uppercase tracking-widest text-background">
-                Premium
-              </span>
-            </div>
+            {(() => {
+              const promoOn = isPromoActive() && course.price > 0;
+              const finalPrice = promoOn ? applyDiscount(course.price) : course.price;
+              return (
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <span className="text-3xl font-light">{formatPrice(finalPrice)}</span>
+                  {promoOn && (
+                    <span className="text-lg text-muted-foreground line-through">
+                      {formatPrice(course.price)}
+                    </span>
+                  )}
+                  <span className="rounded-full bg-foreground px-3 py-1 text-[10px] uppercase tracking-widest text-background">
+                    Premium
+                  </span>
+                  {promoOn && (
+                    <span
+                      className="rounded-full px-3 py-1 text-[10px] uppercase tracking-widest text-white"
+                      style={{ background: "var(--brand)" }}
+                    >
+                      -{PROMO.discountPercent}%
+                    </span>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Banks */}
             <div className="mt-8">

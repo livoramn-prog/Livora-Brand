@@ -17,9 +17,34 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--brand-bg)] via-background to-[var(--warm-soft)] opacity-60" />
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-          <div className="max-w-3xl fade-up">
+        {/* Анимэйшнтай gradient background */}
+        <div className="hero-gradient absolute inset-0 -z-10 opacity-70" />
+        {/* Хөвөгч цэцэг өнгөт орбит */}
+        <div
+          className="hero-orb"
+          style={{
+            top: "-15%",
+            right: "-10%",
+            width: "55%",
+            height: "55%",
+            background: "var(--brand)",
+            animation: "hero-orb-1 16s ease-in-out infinite",
+          }}
+        />
+        <div
+          className="hero-orb"
+          style={{
+            bottom: "-20%",
+            left: "-15%",
+            width: "60%",
+            height: "60%",
+            background: "var(--warm)",
+            animation: "hero-orb-2 22s ease-in-out infinite",
+          }}
+        />
+
+        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+          <div className="hero-parallax max-w-3xl fade-up">
             <p className="brand-wordmark text-xs uppercase text-muted-foreground">
               Live · Inspire · Vision · Organize · Rise · Achieve
             </p>

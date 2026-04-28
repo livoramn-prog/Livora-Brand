@@ -19,7 +19,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+    <header
+      className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md"
+      style={{ viewTransitionName: "site-header" }}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Logo size="md" />
 

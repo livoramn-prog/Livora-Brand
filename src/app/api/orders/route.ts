@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCourseBySlug } from "@/lib/data";
 import { sendOrderEmails } from "@/lib/email";
 import { sendTelegramOrderNotification } from "@/lib/notifications";
+import { applyDiscount } from "@/lib/promo";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export async function POST(request: Request) {
@@ -21,6 +22,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Сургалт олдсонгүй" }, { status: 404 });
     }
 
+    // Урамшуулал идэвхтэй бол хямдруулсан үнээр захиалгыг хадгална
+    const finalAmount = applyDiscount(course.price);
+    const courseWithFinalPrice = { ...course, price: finalAmount };
+
     // 1. Insert order to Supabase
     const { error: dbError } = await supabaseAdmin.from("orders").insert({
       course_id: course.id,
@@ -28,7 +33,7 @@ export async function POST(request: Request) {
       customer_name: customerName,
       customer_email: customerEmail,
       customer_phone: customerPhone,
-      amount: course.price,
+      amount: finalAmount,
       bank_used: bankUsed ?? null,
       status: "pending",
     });
@@ -37,11 +42,17 @@ export async function POST(request: Request) {
       // Continue to send email even if DB fails
     }
 
-    // 2. Send notifications in parallel (email + Telegram)
+    // 2. Send notifications in parallel (email + Telegram) — discounted price-тай
     await Promise.allSettled([
-      sendOrderEmails({ course, customerName, customerEmail, customerPhone, bankUsed }),
+      sendOrderEmails({
+        course: courseWithFinalPrice,
+        customerName,
+        customerEmail,
+        customerPhone,
+        bankUsed,
+      }),
       sendTelegramOrderNotification({
-        course,
+        course: courseWithFinalPrice,
         customerName,
         customerEmail,
         customerPhone,

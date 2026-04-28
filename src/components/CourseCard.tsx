@@ -3,9 +3,12 @@ import Link from "next/link";
 import { Clock, BookOpen, Star } from "lucide-react";
 import { Course, CATEGORY_LABELS } from "@/lib/types";
 import { formatPrice, formatDuration } from "@/lib/utils";
+import { applyDiscount, isPromoActive, PROMO } from "@/lib/promo";
 
 export function CourseCard({ course }: { course: Course }) {
   const isFree = course.price === 0;
+  const promoOn = isPromoActive() && !isFree;
+  const finalPrice = promoOn ? applyDiscount(course.price) : course.price;
   return (
     <Link
       href={`/courses/${course.slug}`}
@@ -29,6 +32,14 @@ export function CourseCard({ course }: { course: Course }) {
           >
             {isFree ? "Үнэгүй" : "Premium"}
           </span>
+          {promoOn && (
+            <span
+              className="rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-white"
+              style={{ background: "var(--brand)" }}
+            >
+              -{PROMO.discountPercent}%
+            </span>
+          )}
         </div>
       </div>
 
@@ -56,7 +67,14 @@ export function CourseCard({ course }: { course: Course }) {
         </div>
 
         <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
-          <span className="text-lg font-medium">{formatPrice(course.price)}</span>
+          <span className="flex items-baseline gap-2">
+            <span className="text-lg font-medium">{formatPrice(finalPrice)}</span>
+            {promoOn && (
+              <span className="text-xs text-muted-foreground line-through">
+                {formatPrice(course.price)}
+              </span>
+            )}
+          </span>
           <span className="text-xs uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-foreground">
             Үзэх →
           </span>

@@ -121,6 +121,121 @@ h1, h2, h3 {
   animation: fadeUp 0.6s ease-out backwards;
 }
 
+/* ============ HERO АНИМАЦИ ============ */
+
+/* Анимэйшнтай gradient — өнгө аажмаар хөдөлдөг */
+@keyframes hero-gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--brand-bg) 0%,
+    var(--background) 35%,
+    var(--warm-soft) 70%,
+    var(--brand-bg) 100%
+  );
+  background-size: 300% 300%;
+  animation: hero-gradient 18s ease-in-out infinite;
+}
+
+/* Гэрлэн орбит — hero дээр хөвөгч spheres */
+@keyframes hero-orb-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.1); }
+}
+@keyframes hero-orb-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30px, 40px) scale(1.15); }
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+[data-theme="dark"] .hero-orb {
+  opacity: 0.25;
+}
+
+/* Scroll-driven parallax (Chrome 115+, Edge 115+, Safari 26+) */
+@supports (animation-timeline: scroll()) {
+  @keyframes hero-parallax {
+    to {
+      transform: translateY(-80px);
+      opacity: 0.4;
+    }
+  }
+  .hero-parallax {
+    animation: hero-parallax linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 80vh;
+  }
+}
+
+/* Promo bar shine эффект */
+@keyframes promo-shine {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(200%); }
+}
+.animate-promo-shine {
+  animation: promo-shine 4s ease-in-out infinite;
+}
+
+/* ============ VIEW TRANSITIONS ============ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: vt-fade-out;
+}
+::view-transition-new(root) {
+  animation-name: vt-fade-in;
+}
+
+@keyframes vt-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes vt-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header нь хэвээр үлдэнэ */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+
+/* Хөдөлгөөн багасгасан хэрэглэгчийг хүндэтгэх */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+  .hero-gradient,
+  .hero-orb,
+  .animate-promo-shine,
+  .hero-parallax {
+    animation: none !important;
+  }
+}
+
 /* Брэнд CTA товчлуурын стиль */
 .btn-brand {
   background: var(--brand);
