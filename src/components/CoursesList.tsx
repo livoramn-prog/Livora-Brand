@@ -30,38 +30,37 @@ export function CoursesList({ courses }: { courses: Course[] }) {
 
   return (
     <>
-      <div className="mt-10 space-y-6 border-y border-border py-6">
+      <div className="mt-10 space-y-5">
         <div className="relative">
           <Search
             size={18}
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground"
+            className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground"
           />
           <input
             type="search"
             placeholder="Сургалт хайх..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-full border border-border bg-background py-3 pl-11 pr-4 text-sm outline-none transition-colors focus:border-foreground"
+            className="w-full rounded-2xl bg-muted py-3.5 pl-12 pr-4 text-base outline-none transition-all focus:bg-background-pure focus:shadow-ios-sm"
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-2 text-xs uppercase tracking-widest text-muted-foreground">Үнэ:</span>
+        {/* iOS-style segmented control */}
+        <div className="ios-segment overflow-x-auto no-scrollbar">
           {(["all", "free", "paid"] as PriceFilter[]).map((p) => (
-            <FilterChip
+            <button
               key={p}
-              active={priceFilter === p}
+              type="button"
               onClick={() => setPriceFilter(p)}
-              label={p === "all" ? "Бүгд" : p === "free" ? "Үнэгүй" : "Premium"}
-            />
+              className={`ios-segment-item shrink-0 ${priceFilter === p ? "active" : ""}`}
+            >
+              {p === "all" ? "Бүгд" : p === "free" ? "Үнэгүй" : "Premium"}
+            </button>
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-2 text-xs uppercase tracking-widest text-muted-foreground">
-            Чиглэл:
-          </span>
-          <FilterChip active={category === "all"} onClick={() => setCategory("all")} label="Бүгд" />
+        <div className="flex flex-wrap items-center gap-2 overflow-x-auto no-scrollbar">
+          <FilterChip active={category === "all"} onClick={() => setCategory("all")} label="Бүх чиглэл" />
           {(Object.keys(CATEGORY_LABELS) as CourseCategory[]).map((c) => (
             <FilterChip
               key={c}
@@ -105,10 +104,10 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full border px-4 py-1.5 text-xs transition-all",
+        "ios-press shrink-0 rounded-full px-4 py-2 text-xs font-medium transition-all",
         active
-          ? "border-foreground bg-foreground text-background"
-          : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
+          ? "bg-foreground text-background shadow-ios-sm"
+          : "bg-muted text-muted-foreground hover:bg-background-pure hover:text-foreground"
       )}
     >
       {label}

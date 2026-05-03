@@ -59,17 +59,18 @@ export default async function HomePage() {
               Монгол хэл дээрх премиум сургалтууд — Instagram бизнесээс сэтгэлийн тэнцвэр хүртэл.
               Бэлэн материал, видео, шаблонтой. Шууд эхлээд, шууд хэрэглэнэ.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-10 flex flex-wrap items-center gap-3">
               <Link
                 href="/courses"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+                className="ios-press inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-medium uppercase tracking-widest text-white shadow-ios-lg transition-opacity hover:opacity-90"
                 style={{ background: "var(--brand)" }}
               >
                 Сургалтуудыг үзэх <ArrowRight size={16} />
               </Link>
               <Link
                 href="/articles"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-7 py-3.5 text-sm uppercase tracking-widest text-foreground transition-colors hover:bg-muted"
+                className="ios-press inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-medium uppercase tracking-widest text-foreground backdrop-blur-md transition-colors hover:bg-muted"
+                style={{ background: "color-mix(in oklab, var(--background-pure) 60%, transparent)" }}
               >
                 Нийтлэл унших
               </Link>
@@ -160,7 +161,7 @@ export default async function HomePage() {
           </p>
           <Link
             href="/courses"
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm uppercase tracking-widest text-foreground transition-opacity hover:opacity-90"
+            className="ios-press mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-medium uppercase tracking-widest text-foreground shadow-ios-lg transition-opacity hover:opacity-90"
           >
             Эхлэх <ArrowRight size={16} />
           </Link>

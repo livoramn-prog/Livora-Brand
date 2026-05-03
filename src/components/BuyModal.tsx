@@ -67,20 +67,27 @@ export function BuyModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm sm:items-center sm:p-4"
       onClick={onClose}
     >
       <div
-        className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-background p-8 shadow-2xl sm:p-10"
+        className="ios-sheet relative max-h-[92vh] w-full max-w-2xl overflow-y-auto bg-background-pure p-6 shadow-2xl sm:p-10"
+        style={{ borderRadius: "var(--radius-2xl) var(--radius-2xl) 0 0" }}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* iOS-style drag handle (mobile) */}
+        <div
+          className="mx-auto mb-4 h-1 w-10 rounded-full bg-muted-foreground/30 sm:hidden"
+          aria-hidden="true"
+        />
+
         <button
           type="button"
           onClick={onClose}
           aria-label="Хаах"
-          className="absolute right-5 top-5 rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="ios-press absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:text-foreground"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
 
         {submitted ? (
@@ -241,7 +248,8 @@ export function BuyModal({
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-6 w-full rounded-full bg-foreground px-6 py-4 text-sm uppercase tracking-widest text-background transition-opacity hover:opacity-90 disabled:opacity-50"
+                className="ios-press mt-6 w-full rounded-full px-6 py-4 text-sm font-semibold uppercase tracking-widest text-white shadow-ios-md transition-opacity hover:opacity-90 disabled:opacity-50"
+                style={{ background: "var(--brand)" }}
               >
                 {submitting ? "Илгээж байна..." : "Төлбөр төлсөн →"}
               </button>
@@ -297,7 +305,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-xs uppercase tracking-widest text-muted-foreground">
+      <label className="block text-xs font-medium uppercase tracking-widest text-muted-foreground">
         {label}
       </label>
       <input
@@ -306,7 +314,7 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="mt-1.5 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-foreground"
+        className="mt-1.5 w-full rounded-2xl bg-muted px-4 py-3.5 text-base outline-none transition-all focus:bg-background-pure focus:shadow-ios-sm"
       />
       {hint && <p className="mt-1.5 text-xs text-muted-foreground">{hint}</p>}
     </div>

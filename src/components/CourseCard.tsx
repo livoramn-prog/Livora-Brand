@@ -12,7 +12,8 @@ export function CourseCard({ course }: { course: Course }) {
   return (
     <Link
       href={`/courses/${course.slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-background transition-all hover:shadow-xl hover:-translate-y-1"
+      className="group ios-card ios-press flex flex-col overflow-hidden"
+      style={{ borderRadius: "var(--radius-xl)" }}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         <Image

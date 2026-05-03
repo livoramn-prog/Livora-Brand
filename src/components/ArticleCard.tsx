@@ -7,7 +7,8 @@ export function ArticleCard({ article }: { article: Article }) {
   return (
     <Link
       href={`/articles/${article.slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border transition-all hover:shadow-lg hover:-translate-y-0.5"
+      className="group ios-card ios-press flex flex-col overflow-hidden"
+      style={{ borderRadius: "var(--radius-xl)" }}
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-muted">
         <Image
