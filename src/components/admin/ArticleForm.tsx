@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Article } from "@/lib/types";
+import { ImageUpload } from "./ImageUpload";
 
 const CATEGORIES = [
   { value: "mental-health", label: "Сэтгэл зүй" },
@@ -52,11 +53,12 @@ export function ArticleForm({
         <Field label="Зохиогч" name="author" defaultValue={article?.author ?? "Livora Team"} />
       </div>
 
-      <Field
-        label="Cover зурагны URL"
+      <ImageUpload
         name="cover_image"
         defaultValue={article?.coverImage}
-        hint="https://images.unsplash.com/... гэх мэт"
+        folder="articles"
+        label="Cover зураг"
+        hint="Сайхан зураг сонгоорой (хамгийн ихдээ 5MB)"
       />
 
       <div className="flex items-center gap-3 border-t border-border pt-6">

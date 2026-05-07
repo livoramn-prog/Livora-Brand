@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Course } from "@/lib/types";
+import { ImageUpload } from "./ImageUpload";
 
 const CATEGORIES = [
   { value: "marketing", label: "Дижитал маркетинг" },
@@ -78,11 +79,12 @@ export function CourseForm({
         />
       </div>
 
-      <Field
-        label="Cover зурагны URL"
+      <ImageUpload
         name="cover_image"
         defaultValue={course?.coverImage}
-        hint="https://images.unsplash.com/... гэх мэт"
+        folder="courses"
+        label="Cover зураг"
+        hint="Сайхан өндөр чанарын зураг сонгоорой (хамгийн ихдээ 5MB)"
       />
 
       <div className="flex items-center gap-3">

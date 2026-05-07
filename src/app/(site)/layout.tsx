@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PromoBar } from "@/components/PromoBar";
+import { InstagramGate } from "@/components/InstagramGate";
 import { getPromoState } from "@/lib/promo";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -8,6 +9,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <>
+      <InstagramGate />
       {promo.active && (
         <PromoBar
           endDateIso={promo.endDateIso}
