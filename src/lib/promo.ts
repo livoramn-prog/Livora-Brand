@@ -14,11 +14,10 @@ export type PromoConfig = {
 };
 
 // ⚠️ Энд дансаа засна
-export const PROMO: PromoConfig = {
-  active: true,
-  discountPercent: 25,
-  // Энэ долоо хоногийн ням гарагт 23:59 Улаанбаатарын цагаар (UTC+8)
-  endDateIso: "2026-05-03T15:59:59Z",
+export const PROMO = {
+  active: true,                              // false болговол шууд унтарна
+  discountPercent: 25,                       // % утга
+  endDateIso: "2026-05-16T15:59:59Z",        // 2026-05-16 23:59 UB цаг (UTC+8)
   message: "Зөвхөн энэ долоо хоногт бүх Premium сургалт 25% хямдартай",
   shortMessage: "25% хямдрал",
 };
