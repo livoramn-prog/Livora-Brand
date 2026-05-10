@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     description: "Монгол хэл дээрх практик сургалтууд: Instagram, бизнес, эрүүл амьдрал.",
     type: "website",
     locale: "mn_MN",
+    images: [{ url: "/livora-logo.png", width: 1080, height: 1080, alt: "Livora" }],
+  },
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
   },
 };
 
