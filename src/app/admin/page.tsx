@@ -15,7 +15,7 @@ export default async function AdminDashboard() {
     <div>
       <div>
         <p className="brand-wordmark text-xs uppercase text-muted-foreground">Тойм</p>
-        <h1 className="mt-2 text-3xl font-light">Сайн байна уу, Чинбам 👋</h1>
+        <h1 className="mt-2 text-3xl font-light">Сайн байна уу, Чинбат 👋</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Өнөөдрийн ерөнхий статистик. {formatDate(new Date().toISOString())}.
         </p>
