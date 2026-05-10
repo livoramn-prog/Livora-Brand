@@ -2,13 +2,19 @@ import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
 import { CourseCard } from "@/components/CourseCard";
 import { ArticleCard } from "@/components/ArticleCard";
-import { getAllArticles, getFeaturedCourses, getFreeCourses } from "@/lib/data";
+import {
+  getAllArticles,
+  getFeaturedCourses,
+  getFreeCourses,
+  getPublicStats,
+} from "@/lib/data";
 
 export default async function HomePage() {
-  const [featured, free, allArticles] = await Promise.all([
+  const [featured, free, allArticles, stats] = await Promise.all([
     getFeaturedCourses(6),
     getFreeCourses(),
     getAllArticles(),
+    getPublicStats(),
   ]);
   const latestArticles = allArticles.slice(0, 3);
   const freeTop = free.slice(0, 3);
@@ -77,8 +83,8 @@ export default async function HomePage() {
             </div>
 
             <div className="mt-16 grid grid-cols-2 gap-8 border-t border-border pt-10 sm:grid-cols-4">
-              <Stat value="8" label="Сургалт" />
-              <Stat value="6" label="Чиглэл" />
+              <Stat value={String(stats.coursesCount)} label="Сургалт" />
+              <Stat value={String(stats.categoriesCount)} label="Чиглэл" />
               <Stat value="100%" label="Монгол хэл" />
               <Stat value="24ч" label="Email хариу" />
             </div>

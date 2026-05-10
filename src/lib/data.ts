@@ -300,3 +300,26 @@ export async function getTopSellingCourse(): Promise<Course | null> {
   if (list.length === 0) return null;
   return [...list].sort((a, b) => b.studentsCount - a.studentsCount)[0];
 }
+
+export async function getPublicStats(): Promise<{
+  coursesCount: number;
+  categoriesCount: number;
+}> {
+  const { data, error } = await supabase
+    .from("courses")
+    .select("category")
+    .eq("is_published", true);
+
+  if (error) {
+    console.error("getPublicStats:", error);
+    return { coursesCount: 0, categoriesCount: 0 };
+  }
+
+  const courses = (data ?? []) as { category: string }[];
+  const uniqueCategories = new Set(courses.map((c) => c.category));
+
+  return {
+    coursesCount: courses.length,
+    categoriesCount: uniqueCategories.size,
+  };
+}
