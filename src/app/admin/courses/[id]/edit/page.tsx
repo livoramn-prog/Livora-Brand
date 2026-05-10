@@ -32,7 +32,15 @@ export default async function EditCoursePage(props: PageProps<"/admin/courses/[i
     studentsCount: data.students_count ?? 0,
     isPublished: data.is_published,
     createdAt: data.created_at,
-    files: [],
+    files: (data.course_files ?? []).map(
+      (f: { id: string; name: string; type: string; size_mb: number | null; url: string }) => ({
+        id: f.id,
+        name: f.name,
+        type: f.type,
+        sizeMb: Number(f.size_mb ?? 0),
+        url: f.url,
+      })
+    ),
   };
 
   const action = updateCourse.bind(null, id);

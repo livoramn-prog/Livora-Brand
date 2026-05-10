@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Course } from "@/lib/types";
 import { ImageUpload } from "./ImageUpload";
+import { FilesUpload } from "./FilesUpload";
 
 const CATEGORIES = [
   { value: "marketing", label: "Дижитал маркетинг" },
@@ -85,6 +86,18 @@ export function CourseForm({
         folder="courses"
         label="Cover зураг"
         hint="Сайхан өндөр чанарын зураг сонгоорой (хамгийн ихдээ 5MB)"
+      />
+
+      <FilesUpload
+        name="files"
+        defaultValue={course?.files?.map((f) => ({
+          name: f.name,
+          type: f.type,
+          sizeMb: f.sizeMb,
+          url: f.url,
+        }))}
+        folder="course-files"
+        label="Сургалтын файлууд"
       />
 
       <div className="flex items-center gap-3">

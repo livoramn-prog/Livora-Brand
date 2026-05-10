@@ -32,6 +32,23 @@ export async function deleteCourse(courseId: string) {
   revalidatePath("/courses");
 }
 
+type UploadedFileInput = {
+  name: string;
+  type: string;
+  sizeMb: number;
+  url: string;
+};
+
+function parseFiles(raw: FormDataEntryValue | null): UploadedFileInput[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(String(raw));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 export async function createCourse(formData: FormData) {
   const slug = String(formData.get("slug") || "").trim();
   const title = String(formData.get("title") || "").trim();
@@ -52,8 +69,26 @@ export async function createCourse(formData: FormData) {
     is_published: formData.get("is_published") === "on",
   };
 
-  const { error } = await supabaseAdmin.from("courses").insert(data);
+  const { data: created, error } = await supabaseAdmin
+    .from("courses")
+    .insert(data)
+    .select("id")
+    .single();
   if (error) throw new Error(error.message);
+
+  const files = parseFiles(formData.get("files"));
+  if (files.length > 0 && created) {
+    const fileRows = files.map((f) => ({
+      course_id: created.id,
+      name: f.name,
+      type: f.type,
+      size_mb: f.sizeMb,
+      url: f.url,
+    }));
+    const { error: filesError } = await supabaseAdmin.from("course_files").insert(fileRows);
+    if (filesError) console.error("Файл хадгалахад алдаа:", filesError);
+  }
+
   revalidatePath("/admin/courses");
   revalidatePath("/courses");
   redirect("/admin/courses");
@@ -76,6 +111,22 @@ export async function updateCourse(courseId: string, formData: FormData) {
   };
   const { error } = await supabaseAdmin.from("courses").update(data).eq("id", courseId);
   if (error) throw new Error(error.message);
+
+  // Файлуудыг шинэчлэх — хуучнаа устгаад шинээр оруулна
+  const files = parseFiles(formData.get("files"));
+  await supabaseAdmin.from("course_files").delete().eq("course_id", courseId);
+  if (files.length > 0) {
+    const fileRows = files.map((f) => ({
+      course_id: courseId,
+      name: f.name,
+      type: f.type,
+      size_mb: f.sizeMb,
+      url: f.url,
+    }));
+    const { error: filesError } = await supabaseAdmin.from("course_files").insert(fileRows);
+    if (filesError) console.error("Файл шинэчлэхэд алдаа:", filesError);
+  }
+
   revalidatePath("/admin/courses");
   revalidatePath("/courses");
   redirect("/admin/courses");
