@@ -3,7 +3,9 @@ import { supabaseAdmin } from "@/lib/supabase";
 import type { FileType } from "@/lib/types";
 
 const BUCKET = "uploads";
-const MAX_BYTES = 500 * 1024 * 1024; // 500 MB — видео багтах
+// Supabase free tier нэг файл дээр 50MB хязгаартай. Үүнээс илүү файл upload
+// хийхийн тулд Supabase Pro plan ($25/сар) шаардлагатай.
+const MAX_BYTES = 50 * 1024 * 1024;
 
 const TYPE_MAP: Record<string, FileType> = {
   "application/pdf": "pdf",
@@ -57,7 +59,7 @@ export async function POST(request: Request) {
     }
     if (file.size > MAX_BYTES) {
       return NextResponse.json(
-        { error: "Файлын хэмжээ 500MB-ээс хэтрэхгүй байх ёстой" },
+        { error: "Файлын хэмжээ 50MB-ээс хэтрэхгүй байх ёстой (Supabase Free plan)" },
         { status: 400 }
       );
     }

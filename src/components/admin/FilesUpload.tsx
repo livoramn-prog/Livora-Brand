@@ -125,7 +125,7 @@ export function FilesUpload({
               <Upload size={16} />
             </span>
             <p className="text-sm font-medium">Видео, PDF, Word, Excel оруул</p>
-            <p className="text-xs text-muted-foreground">Олон файл сонгож болно · 500MB хүртэл</p>
+            <p className="text-xs text-muted-foreground">Олон файл сонгож болно · 50MB хүртэл</p>
           </button>
         ) : (
           files.map((f, i) => {
