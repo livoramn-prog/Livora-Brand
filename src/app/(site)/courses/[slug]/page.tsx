@@ -9,6 +9,7 @@ import { CourseActions } from "@/components/CourseActions";
 import { WhatYouLearn } from "@/components/WhatYouLearn";
 import { InstructorCard } from "@/components/InstructorCard";
 import { Testimonials } from "@/components/Testimonials";
+import { Markdown } from "@/components/Markdown";
 import { getTestimonialsForCategory } from "@/lib/testimonials";
 import { applyDiscount, isPromoActive, PROMO } from "@/lib/promo";
 
@@ -84,13 +85,8 @@ export default async function CourseDetailPage(props: PageProps<"/courses/[slug]
 
           <div className="mt-12">
             <h2 className="text-2xl font-light">Сургалтын тухай</h2>
-            <div className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground">
-              {course.description
-                .split("\n")
-                .filter((p) => !p.trim().startsWith("- ") && !p.trim().startsWith("* "))
-                .map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
+            <div className="mt-4">
+              <Markdown>{course.description}</Markdown>
             </div>
           </div>
 

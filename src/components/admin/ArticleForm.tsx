@@ -56,11 +56,11 @@ export function ArticleForm({
       />
       <TextArea label="Товч агуулга" name="excerpt" defaultValue={article?.excerpt} rows={3} />
       <TextArea
-        label="Үндсэн агуулга"
+        label="Үндсэн агуулга (Markdown)"
         name="content"
         defaultValue={article?.content}
         rows={15}
-        hint="**гарчиг** гэж бичвэл тод гарчиг болно. Шинэ мөр шууд ажиллана."
+        hint="Claude эсвэл бусад AI-аас хуулсан Markdown текстийг шууд буулгаж болно. Дэмждэг: # ## ### гарчиг, **тод**, *налуу*, - bullet, 1. дугаарласан, > ишлэл, [холбоос](url), `код`, хүснэгт."
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

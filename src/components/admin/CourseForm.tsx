@@ -68,11 +68,11 @@ export function CourseForm({
         defaultValue={course?.shortDescription}
       />
       <TextArea
-        label="Дэлгэрэнгүй тайлбар"
+        label="Дэлгэрэнгүй тайлбар (Markdown)"
         name="description"
         defaultValue={course?.description}
-        rows={8}
-        hint="Урт тайлбар. Шинэ мөр (\\n) ашиглах боломжтой."
+        rows={10}
+        hint="Claude эсвэл бусад AI-аас хуулсан Markdown текстийг шууд буулгаж болно. # Гарчиг, **тод**, - bullet, > ишлэл бүгд ажиллана."
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

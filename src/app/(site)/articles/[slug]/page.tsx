@@ -6,6 +6,7 @@ import { getAllArticles, getArticleBySlug } from "@/lib/data";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { ArticleCard } from "@/components/ArticleCard";
+import { Markdown } from "@/components/Markdown";
 
 export async function generateStaticParams() {
   const all = await getAllArticles();
@@ -52,33 +53,8 @@ export default async function ArticleDetailPage(props: PageProps<"/articles/[slu
         />
       </div>
 
-      <div className="prose prose-neutral mt-12 max-w-none text-base leading-relaxed text-foreground">
-        {article.content.split("\n\n").map((paragraph, i) => {
-          if (paragraph.startsWith("**") && paragraph.endsWith("**")) {
-            return (
-              <h3 key={i} className="mt-8 text-xl font-medium text-foreground">
-                {paragraph.slice(2, -2)}
-              </h3>
-            );
-          }
-          const isHeader = /^\*\*.+\*\*$/.test(paragraph.trim().split("\n")[0]);
-          if (isHeader) {
-            const lines = paragraph.split("\n");
-            const heading = lines[0].replace(/\*\*/g, "");
-            const rest = lines.slice(1).join("\n");
-            return (
-              <div key={i}>
-                <h3 className="mt-8 text-xl font-medium text-foreground">{heading}</h3>
-                <p className="mt-2 text-muted-foreground">{rest}</p>
-              </div>
-            );
-          }
-          return (
-            <p key={i} className="mt-4 text-muted-foreground">
-              {paragraph}
-            </p>
-          );
-        })}
+      <div className="mt-12">
+        <Markdown>{article.content}</Markdown>
       </div>
 
       {related.length > 0 && (
