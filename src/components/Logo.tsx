@@ -11,9 +11,9 @@ interface LogoProps {
 }
 
 const SIZES = {
-  sm: 36,
-  md: 44,
-  lg: 96,
+  sm: 56,
+  md: 80,
+  lg: 160,
 } as const;
 
 export function Logo({ className, size = "md", href = "/" }: LogoProps) {
