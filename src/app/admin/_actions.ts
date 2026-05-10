@@ -54,6 +54,10 @@ export async function createCourse(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   if (!slug || !title) throw new Error("slug болон title заавал хэрэгтэй");
 
+  // Шинэ сургалтыг 10-15 хооронд санамсаргүй сурагчтай үүсгэнэ
+  // (хоосон шинэ сургалт хэт ганцаардсан харагдахаас сэргийлсэн default)
+  const defaultStudents = Math.floor(Math.random() * 6) + 10;
+
   const data = {
     slug,
     title,
@@ -66,6 +70,7 @@ export async function createCourse(formData: FormData) {
     lessons: Number(formData.get("lessons") || 0),
     level: String(formData.get("level") || "Эхлэн"),
     instructor: String(formData.get("instructor") || "Livora Team"),
+    students_count: defaultStudents,
     is_published: formData.get("is_published") === "on",
   };
 
