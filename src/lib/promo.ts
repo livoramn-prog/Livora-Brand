@@ -16,10 +16,10 @@ export type PromoConfig = {
 // ⚠️ Энд дансаа засна
 export const PROMO = {
   active: true,                              // false болговол шууд унтарна
-  discountPercent: 25,                       // % утга
-  endDateIso: "2026-05-16T15:59:59Z",        // 2026-05-16 23:59 UB цаг (UTC+8)
-  message: "Зөвхөн энэ долоо хоногт бүх Premium сургалт 25% хямдартай",
-  shortMessage: "25% хямдрал",
+  discountPercent: 20,                       // % утга
+  endDateIso: "2026-05-04T15:59:59Z",        // 2026-05-04 23:59 UB цаг (UTC+8) — 6 хоног
+  message: "6 хоногийн онцгой санал — бүх Premium сургалт 20% хямдартай",
+  shortMessage: "20% хямдрал",
 };
 
 export function isPromoActive(): boolean {
@@ -29,7 +29,10 @@ export function isPromoActive(): boolean {
 
 export function applyDiscount(price: number): number {
   if (!isPromoActive() || price === 0) return price;
-  return Math.round((price * (100 - PROMO.discountPercent)) / 100);
+  // Хямдруулсан үнийг хамгийн ойрын 1,000-аар тоймлож харагдалтыг цэвэрхэн болгоно
+  // (Жнь: 99,000 × 80% = 79,200 → 79,000)
+  const raw = (price * (100 - PROMO.discountPercent)) / 100;
+  return Math.round(raw / 1000) * 1000;
 }
 
 export function getPromoState() {
